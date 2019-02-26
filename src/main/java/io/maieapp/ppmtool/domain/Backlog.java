@@ -12,7 +12,7 @@ public class Backlog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private Integer PTSquence = 0;
+    private Integer PTSequence = 0;
     private String projectIdentifier;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -35,12 +35,12 @@ public class Backlog {
         this.id = id;
     }
 
-    public Integer getPTSquence() {
-        return PTSquence;
+    public Integer getPTSequence() {
+        return PTSequence;
     }
 
-    public void setPTSquence(Integer PTSquence) {
-        this.PTSquence = PTSquence;
+    public void setPTSequence(Integer PTSequence) {
+        this.PTSequence = PTSequence;
     }
 
     public String getProjectIdentifier() {
