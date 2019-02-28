@@ -1,14 +1,15 @@
 package io.maieapp.ppmtool.services;
 
 import io.maieapp.ppmtool.domain.Backlog;
+import io.maieapp.ppmtool.domain.Project;
 import io.maieapp.ppmtool.domain.ProjectTask;
 import io.maieapp.ppmtool.exceptions.ProjectNotFoundException;
 import io.maieapp.ppmtool.repositories.BacklogRepository;
+import io.maieapp.ppmtool.repositories.ProjectRepository;
 import io.maieapp.ppmtool.repositories.ProjectTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class ProjectTaskService {
@@ -18,6 +19,9 @@ public class ProjectTaskService {
 
     @Autowired
     private ProjectTaskRepository projectTaskRepository;
+
+    @Autowired
+    private ProjectRepository projectRepository;
 
     public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask){
 
@@ -48,7 +52,18 @@ public class ProjectTaskService {
     }
 
     public Iterable<ProjectTask> findBacklogById(String id) {
+        Project project = projectRepository.findByProjectIdentifier(id);
+
+        if(project == null){
+            throw new ProjectNotFoundException("Project with ID:  '"+id+"' does not exist");
+        }
         return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
+    }
+
+    public ProjectTask findPTByProjectSequence(String backlog_id, String pt_id){
+        //make sure we are searching on the right backlog
+
+        return projectTaskRepository.findByProjectSequence(pt_id);
     }
 }
 

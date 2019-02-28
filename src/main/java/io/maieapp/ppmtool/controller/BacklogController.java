@@ -1,5 +1,6 @@
 package io.maieapp.ppmtool.controller;
 
+import io.maieapp.ppmtool.domain.Project;
 import io.maieapp.ppmtool.domain.ProjectTask;
 import io.maieapp.ppmtool.services.MapValidationErrorService;
 import io.maieapp.ppmtool.services.ProjectTaskService;
@@ -37,5 +38,11 @@ public class BacklogController {
     @GetMapping("/{backlog_id}")
     public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlog_id){
         return projectTaskService.findBacklogById(backlog_id);
+    }
+
+    @GetMapping("/{backlog_id}/{pt_id}")
+    public ResponseEntity<?> getProjectTask(@PathVariable String backlog_id, @PathVariable String pt_id){
+        ProjectTask projectTask = projectTaskService.findPTByProjectSequence(backlog_id, pt_id);
+        return new ResponseEntity<ProjectTask>(projectTask, HttpStatus.OK);
     }
 }
